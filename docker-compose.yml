@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   taskqueue:
-    image: rotoronttonen/easy-task-queue:1.2
+    image: rotoronttonen/easy-task-queue:1.4
 
   redis:
     image: redis
