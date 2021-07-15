@@ -1,0 +1,4 @@
+github.com/go-chi/chi/v5 v5.0.3 h1:khYQBdPivkYG1s1TAzDQG1f6eX4kD2TItYVZexL5rS4=
+github.com/go-chi/chi/v5 v5.0.3/go.mod h1:DslCQbL2OYiznFReuXYUmQ2hGd1aDpCnlMNITLSKoi8=
+github.com/roto-ronttonen/easy-task-queue-client-go v0.0.0-20210715190934-3bb6f0788f41 h1:J+kZLIedSdaw56xO2GTKgu8LFthWj/W+3M4diVR5sw8=
+github.com/roto-ronttonen/easy-task-queue-client-go v0.0.0-20210715190934-3bb6f0788f41/go.mod h1:+jwFBa1kjWIVWnAAF6sHpACM4hycUB/srL7Rm9OB004=
