@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 	"math/rand"
 	"os"
 	"time"
@@ -26,5 +27,7 @@ func main() {
 	})
 	ctx := context.Background()
 
-	taskQueueClient.Start(add(redisClient, ctx))
+	err := taskQueueClient.Start(add(redisClient, ctx))
+
+	log.Fatal(err.Error())
 }

@@ -2,7 +2,66 @@ version: "3.3"
 
 services:
   taskqueue:
-    image: rotoronttonen/easy-task-queue:1.0
+    image: rotoronttonen/easy-task-queue:1.1
 
   redis:
     image: redis
+
+  worker1:
+    build:
+      context: "./worker"
+    depends_on:
+      - redis
+      - taskqueue
+    environment:
+      - "REDIS_ADDRESS=redis:6379"
+      - "TASK_QUEUE_ADDRESS=taskqueue:1993"
+
+  worker2:
+    build:
+      context: "./worker"
+    depends_on:
+      - redis
+      - taskqueue
+    environment:
+      - "REDIS_ADDRESS=redis:6379"
+      - "TASK_QUEUE_ADDRESS=taskqueue:1993"
+
+  app:
+    build:
+      context: "./app"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app-http.rule=PathPrefix(`/`)"
+      - "traefik.http.services.app.loadbalancer.server.port=80"
+
+  api:
+    build:
+      context: "./api"
+    depends_on:
+      - redis
+      - taskqueue
+    environment:
+      - "REDIS_ADDRESS=redis:6379"
+      - "TASK_QUEUE_ADDRESS=taskqueue:1993"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-http.rule=PathPrefix(`/api`)"
+      - "traefik.http.services.api.loadbalancer.server.port=80"
+
+  proxy:
+    image: traefik:v2.2
+    ports:
+      - 80:80
+      - 8080:8080
+
+    volumes:
+      # Add Docker as a mounted volume, so that Traefik can read the labels of other services
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
