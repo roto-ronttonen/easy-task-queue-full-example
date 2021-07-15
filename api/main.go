@@ -96,6 +96,6 @@ func main() {
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(jsonData))
 	})
-	http.ListenAndServe(":3000", r)
+	http.ListenAndServe("0.0.0.0:3000", r)
 
 }

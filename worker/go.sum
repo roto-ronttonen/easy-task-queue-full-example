@@ -29,6 +29,10 @@ github.com/roto-ronttonen/easy-task-queue-client-go v0.0.0-20210715190934-3bb6f0
 github.com/roto-ronttonen/easy-task-queue-client-go v0.0.0-20210715190934-3bb6f0788f41/go.mod h1:+jwFBa1kjWIVWnAAF6sHpACM4hycUB/srL7Rm9OB004=
 github.com/roto-ronttonen/easy-task-queue-client-go v0.0.0-20210715202019-6b6c6bbc97fa h1:hbGj0B9RbrhLrvJxwZ+5ufXpLn0hvs/jAz1EIJjUpNQ=
 github.com/roto-ronttonen/easy-task-queue-client-go v0.0.0-20210715202019-6b6c6bbc97fa/go.mod h1:+jwFBa1kjWIVWnAAF6sHpACM4hycUB/srL7Rm9OB004=
+github.com/roto-ronttonen/easy-task-queue-client-go v0.0.0-20210715205900-8a07af948bad h1:zJlDHdtUZ/ZF5+ZphaxdZTmA7dsE5PBvabOmBgM1JEQ=
+github.com/roto-ronttonen/easy-task-queue-client-go v0.0.0-20210715205900-8a07af948bad/go.mod h1:+jwFBa1kjWIVWnAAF6sHpACM4hycUB/srL7Rm9OB004=
+github.com/roto-ronttonen/easy-task-queue-client-go v0.0.0-20210715212842-4890ae6468fb h1:ve8+wQjN6ORCg29tFllFeQM4qUH0dgd/3/eWLBWWD/0=
+github.com/roto-ronttonen/easy-task-queue-client-go v0.0.0-20210715212842-4890ae6468fb/go.mod h1:+jwFBa1kjWIVWnAAF6sHpACM4hycUB/srL7Rm9OB004=
 github.com/yuin/goldmark v1.2.1/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550/go.mod h1:yigFU9vqHzYiE8UmvKecakEJjdnWj3jj499lnFckfCI=
