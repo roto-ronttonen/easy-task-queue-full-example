@@ -1,12 +1,16 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
+	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-redis/redis/v8"
 	easytaskqueueclientgo "github.com/roto-ronttonen/easy-task-queue-client-go"
 )
 
@@ -28,15 +32,34 @@ func stateHandler(stateRequestChan chan RequestState, addDataChan chan int) {
 	}
 }
 
+func pubSubHandler(redisClient *redis.Client, addDataChan chan int) {
+	ctx := context.Background()
+	pubsub := redisClient.Subscribe(ctx, "taskdone")
+	channel := pubsub.Channel()
+
+	for msg := range channel {
+		data, err := strconv.Atoi(string(msg.Payload))
+		if err != nil {
+			log.Print(err.Error())
+		} else {
+			addDataChan <- data
+		}
+	}
+
+}
+
 func main() {
-
-	taskQueueClient := easytaskqueueclientgo.NewClient(os.Getenv("TASK_QUEUE_ADDRESS"))
-
 	stateRequestChan := make(chan RequestState)
 	addDataChan := make(chan int)
+	taskQueueClient := easytaskqueueclientgo.NewClient(os.Getenv("TASK_QUEUE_ADDRESS"))
+	redisClient := redis.NewClient(&redis.Options{
+		Addr:     os.Getenv("REDIS_ADDRESS"),
+		Password: "",
+		DB:       0,
+	})
 
 	go stateHandler(stateRequestChan, addDataChan)
-
+	go pubSubHandler(redisClient, addDataChan)
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Get("/api/data", func(w http.ResponseWriter, r *http.Request) {
