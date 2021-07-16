@@ -2,7 +2,9 @@ version: "3.3"
 
 services:
   taskqueue:
-    image: rotoronttonen/easy-task-queue:1.6
+    image: rotoronttonen/easy-task-queue:1.12
+    environment:
+      - "TIMEOUT=1"
 
   redis:
     image: redis
