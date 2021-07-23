@@ -9,6 +9,7 @@ function App() {
     refreshInterval: 500,
   });
 
+  const [optionalMessage, setOptionalMessage] = useState("");
   const d = data ?? [];
 
   const [sendTasksEvery, setSendTasksEvery] = useState(0);
@@ -17,7 +18,16 @@ function App() {
     let t: number;
     const fn = async () => {
       if (sendTasksEvery) {
-        await fetch("/api/data", { method: "POST" });
+        await fetch("/api/data", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            optionalMessage:
+              optionalMessage.length === 0 ? null : optionalMessage,
+          }),
+        });
         t = setTimeout(async () => {
           await fn();
         }, sendTasksEvery);
@@ -29,17 +39,31 @@ function App() {
     return () => {
       clearTimeout(t);
     };
-  }, [sendTasksEvery]);
+  }, [sendTasksEvery, optionalMessage]);
 
   return (
     <div>
       <button
         onClick={async () => {
-          await fetch("/api/data", { method: "POST" });
+          await fetch("/api/data", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify({
+              optionalMessage:
+                optionalMessage.length === 0 ? null : optionalMessage,
+            }),
+          });
         }}
       >
         Send task
       </button>
+      <input
+        placeholder="Optional message"
+        value={optionalMessage}
+        onChange={(e) => setOptionalMessage(e.target.value)}
+      />
       <input
         value={sendTasksEvery / 1000}
         step="10"

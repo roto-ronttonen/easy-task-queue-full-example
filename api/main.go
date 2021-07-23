@@ -48,6 +48,10 @@ func pubSubHandler(redisClient *redis.Client, addDataChan chan int) {
 
 }
 
+type postBody struct {
+	OptionalMessage string `json:"optionalMessage"`
+}
+
 func main() {
 	stateRequestChan := make(chan RequestState)
 	addDataChan := make(chan int)
@@ -77,7 +81,19 @@ func main() {
 		w.Write([]byte(jsonData))
 	})
 	r.Post("/api/data", func(w http.ResponseWriter, r *http.Request) {
-		err := taskQueueClient.SendTask("add")
+		var p postBody
+
+		err := json.NewDecoder(r.Body).Decode(&p)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		if len(p.OptionalMessage) == 0 {
+			err = taskQueueClient.SendTask("add")
+		} else {
+			err = taskQueueClient.SendTaskWithData("add", p.OptionalMessage)
+		}
+
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return

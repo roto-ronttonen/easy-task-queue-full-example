@@ -11,10 +11,15 @@ import (
 	easytaskqueueclientgo "github.com/roto-ronttonen/easy-task-queue-client-go"
 )
 
-func add(redisClient *redis.Client, ctx context.Context) func() {
-	return func() {
-		time.Sleep(15 * time.Second)
-		redisClient.Publish(ctx, "taskdone", rand.Int())
+func add(redisClient *redis.Client, ctx context.Context) func(data string) {
+	return func(data string) {
+		time.Sleep(7 * time.Second)
+		if len(data) == 0 {
+			redisClient.Publish(ctx, "taskdone", rand.Int())
+		} else {
+			redisClient.Publish(ctx, "taskdone", data)
+		}
+
 	}
 }
 
