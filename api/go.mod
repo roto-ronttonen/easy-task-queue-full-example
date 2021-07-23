@@ -5,5 +5,5 @@ go 1.16
 require (
 	github.com/go-chi/chi/v5 v5.0.3
 	github.com/go-redis/redis/v8 v8.11.0
-	github.com/roto-ronttonen/easy-task-queue-client-go v0.0.0-20210715214644-9ff53bca31f0
+	github.com/roto-ronttonen/easy-task-queue-client-go v0.0.0-20210723122621-4f14455f64c9
 )
